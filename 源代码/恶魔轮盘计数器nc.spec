@@ -1,8 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
 a = Analysis(
-    ['缁?.py'],
+    ['终2.py'],
     pathex=[],
     binaries=[],
     datas=[('em.ico', '.')],
@@ -22,7 +21,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='鎭堕瓟杞洏瀛愬脊璁℃暟鍣╪c',
+    name='恶魔轮盘作弊计数器nc',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
