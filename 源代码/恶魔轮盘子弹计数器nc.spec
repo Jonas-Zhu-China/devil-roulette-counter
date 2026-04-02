@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['终2.py'],
+    ['缁?.py'],
     pathex=[],
     binaries=[],
     datas=[('em.ico', '.')],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='恶魔轮盘子弹计数器nc',
+    name='鎭堕瓟杞洏瀛愬脊璁℃暟鍣╪c',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
