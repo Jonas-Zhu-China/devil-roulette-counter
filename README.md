@@ -9,7 +9,13 @@
 
 ## 📌 项目简介
 
-这是一个用于《恶魔轮盘》(Devil Roulette) 游戏的小工具，主要功能是**记录实弹与空弹的数量**，帮助玩家在作弊模式下更直观地追踪弹匣状态。
+这是一个用于《恶魔轮盘》(Devil Roulette) 游戏的小工具。
+
+**郑重声明：本工具不是外挂，也不是作弊程序。**
+
+游戏机制是这样的：每局游戏开始前，系统会向玩家展示本轮弹匣里有哪些子弹（几发实弹、几发空弹），但游戏开始后，子弹的顺序会被打乱，玩家需要靠记忆来追踪。子弹数量越多，记忆难度就越大。
+
+本工具的作用就是**帮玩家记录每一轮已经击发过什么子弹、还剩什么子弹**，让玩家不用费脑子记，可以专心享受游戏策略本身的乐趣。
 
 游戏原版链接：https://store.steampowered.com/app/2692030/Devil_Roulette/
 
@@ -18,9 +24,9 @@
 ## ✨ 功能特点
 
 - **直观弹药显示**：实弹（红色）/ 空弹（蓝色）分类展示
-- **作弊模式计数器**：记录每轮已揭露的子弹类型
-- **总弹数统计**：实时显示当前轮次总弹数
-- **窗口置顶**：始终保持在游戏窗口前方
+- **弹匣状态追踪**：实时记录已击发的子弹，显示剩余弹种
+- **总弹数统计**：显示当前轮次总弹数
+- **窗口置顶**：始终保持在游戏窗口前方，不遮挡操作
 - **独立 exe 文件**：无需 Python 环境，双击即用
 
 ---
@@ -28,14 +34,15 @@
 ## 🗂️ 文件结构
 
 ```
-devils-roulette-counter/
-├── 源代码/
-│   ├── 终2.py          # 主程序源码（Python + Tkinter GUI）
-│   ├── em.ico          # 程序图标
-│   ├── bulid_no_cmd.py # PyInstaller 构建脚本
-│   └── 恶魔轮盘子弹计数器nc.spec  # PyInstaller 打包配置
-├── 恶魔轮盘作弊计数器nc.exe  # 预编译可执行文件（Windows）
-└── README.md
+devil-roulette-counter/
+├── README.md
+├── .gitignore
+├── 恶魔轮盘作弊计数器nc.exe  # 预编译可执行文件（Windows，开箱即用）
+└── 源代码/
+    ├── 终2.py          # 主程序源码（Python + Tkinter GUI）
+    ├── em.ico          # 程序图标
+    ├── bulid_no_cmd.py # PyInstaller 构建脚本
+    └── 恶魔轮盘计数器nc.spec  # PyInstaller 打包配置
 ```
 
 ---
@@ -61,8 +68,9 @@ python bulid_no_cmd.py
 
 1. 下载并运行 `恶魔轮盘作弊计数器nc.exe`
 2. 打开《恶魔轮盘》游戏
-3. 根据游戏中的子弹揭露情况，点击对应按钮记录
-4. 工具会实时统计实弹/空弹数量
+3. 游戏开始前，记下弹匣里有哪些子弹
+4. 游戏中每开一枪，就在计数器上点击对应的子弹类型
+5. 工具会实时统计已击发的子弹和剩余弹种
 
 ---
 
@@ -73,6 +81,14 @@ python bulid_no_cmd.py
 | GUI 框架 | Tkinter（Python 内置）|
 | 打包工具 | PyInstaller |
 | 编程语言 | Python 3.x |
+
+---
+
+## 💛 赞赏支持
+
+如果你觉得这个工具对你有帮助，欢迎扫码打赏，您的支持是我继续维护的动力！
+
+<img src="https://raw.githubusercontent.com/Jonas-Zhu-China/devil-roulette-counter/main/%E8%B5%9E%E8%B5%8F%E7%A0%81/bece2c0c8e74ed5c4ceb88d1819a1bfe.jpg" width="280" alt="微信赞赏码" /> <img src="https://raw.githubusercontent.com/Jonas-Zhu-China/devil-roulette-counter/main/%E8%B5%9E%E8%B5%8F%E7%A0%81/caa22a5535d130cd98683065921a44df.jpg" width="280" alt="支付宝赞赏码" />
 
 ---
 
