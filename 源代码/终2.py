@@ -5,29 +5,29 @@ from tkinter import ttk, font
 class AmmoCounterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("楂樼骇寮硅嵂璁℃暟鍣?)
+        self.root.title("高级弹药计数器")
         self.root.geometry("550x500")
         self.root.resizable(False, False)
         self.root.configure(bg="#2c3e50")
         
-        # 璁剧疆榛樿缃《
+        # 设置默认置顶
         self.topmost_var = tk.BooleanVar(value=True)
         self.root.attributes('-topmost', self.topmost_var.get())
         
-        # 鍒涘缓鑷畾涔夊瓧浣?
+        # 创建自定义字体
         self.title_font = font.Font(family="Arial", size=14, weight="bold")
         self.count_font = font.Font(family="Arial", size=18, weight="bold")
         self.button_font = font.Font(family="Arial", size=12, weight="bold")
         self.bullet_font = font.Font(family="Arial", size=11, weight="bold")
         
-        # 瀛愬脊鐘舵€侀€夐」
-        self.ammo_types = ["瀹炲脊", "绌哄脊"]
-        self.bullet_states = {}  # 瀛樺偍瀛愬脊鐘舵€?{搴忓彿: 鐘舵€亇
+        # 子弹状态选项
+        self.ammo_types = ["实弹", "空弹"]
+        self.bullet_states = {}  # 存储子弹状态 {序号: 状态}
         
-        # 鍒涘缓涓绘鏋?
+        # 创建主框架
         self.create_widgets()
         
-        # 缁戝畾閿洏蹇嵎閿?
+        # 绑定键盘快捷键
         self.root.bind("<Up>", lambda e: self.update_count(self.live_count, 1))
         self.root.bind("<Down>", lambda e: self.update_count(self.live_count, -1, True))
         self.root.bind("<Right>", lambda e: self.update_count(self.blank_count, 1))
@@ -35,33 +35,33 @@ class AmmoCounterApp:
         self.root.bind("<space>", lambda e: self.reset_all())
         self.root.bind("<Escape>", lambda e: root.destroy())
         
-        # 瀛愬脊搴忓彿蹇嵎閿?
+        # 子弹序号快捷键
         self.root.bind("<Control-b>", lambda e: self.bullet_frame.focus_set())
         
-        # 鍒濆鐒︾偣
+        # 初始焦点
         self.root.focus_set()
 
     def create_widgets(self):
-        # 鏍囬鏍?
+        # 标题栏
         title_frame = tk.Frame(self.root, bg="#3498db", height=40)
         title_frame.pack(fill=tk.X)
         
         tk.Label(
             title_frame, 
-            text="楂樼骇寮硅嵂璁℃暟鍣?, 
+            text="高级弹药计数器", 
             font=self.title_font,
             bg="#3498db", 
             fg="white"
         ).pack(pady=10)
         
-        # 涓诲唴瀹瑰尯
+        # 主内容区
         main_frame = tk.Frame(self.root, bg="#2c3e50", padx=20, pady=15)
         main_frame.pack(fill=tk.BOTH, expand=True)
         
-        # ================= 褰撳墠瀛愬脊搴忓彿鍖哄煙 =================
+        # ================= 当前子弹序号区域 =================
         current_frame = tk.LabelFrame(
             main_frame, 
-            text="褰撳墠瀛愬脊搴忓彿", 
+            text="当前子弹序号", 
             font=("Arial", 11, "bold"),
             bg="#2c3e50", 
             fg="#f39c12",
@@ -72,10 +72,10 @@ class AmmoCounterApp:
         
         self.current_bullet = tk.IntVar(value=1)
         
-        # 鍑忓彿鎸夐挳
+        # 减号按钮
         tk.Button(
             current_frame, 
-            text="鈼?, 
+            text="◄", 
             font=self.button_font,
             width=3,
             bg="#e67e22", 
@@ -84,7 +84,7 @@ class AmmoCounterApp:
             command=lambda: self.update_current_bullet(-1)
         ).pack(side=tk.LEFT, padx=(10, 5))
         
-        # 褰撳墠瀛愬脊搴忓彿鏄剧ず
+        # 当前子弹序号显示
         tk.Label(
             current_frame, 
             textvariable=self.current_bullet, 
@@ -97,10 +97,10 @@ class AmmoCounterApp:
             pady=5
         ).pack(side=tk.LEFT, padx=5)
         
-        # 鍔犲彿鎸夐挳
+        # 加号按钮
         tk.Button(
             current_frame, 
-            text="鈻?, 
+            text="►", 
             font=self.button_font,
             width=3,
             bg="#e67e22", 
@@ -109,14 +109,14 @@ class AmmoCounterApp:
             command=lambda: self.update_current_bullet(1)
         ).pack(side=tk.LEFT, padx=(5, 10))
         
-        # ================= 寮硅嵂璁℃暟鍖哄煙 =================
+        # ================= 弹药计数区域 =================
         ammo_frame = tk.Frame(main_frame, bg="#2c3e50")
         ammo_frame.pack(fill=tk.X, pady=(0, 15))
         
-        # 瀹炲脊璁℃暟鍣?
+        # 实弹计数器
         live_frame = tk.LabelFrame(
             ammo_frame, 
-            text="瀹炲脊", 
+            text="实弹", 
             font=("Arial", 11, "bold"),
             bg="#2c3e50", 
             fg="#e74c3c",
@@ -161,10 +161,10 @@ class AmmoCounterApp:
             command=lambda: self.update_count(self.live_count, 1)
         ).grid(row=0, column=2, padx=5)
         
-        # 绌哄脊璁℃暟鍣?
+        # 空弹计数器
         blank_frame = tk.LabelFrame(
             ammo_frame, 
-            text="绌哄脊", 
+            text="空弹", 
             font=("Arial", 11, "bold"),
             bg="#2c3e50", 
             fg="#3498db",
@@ -209,10 +209,10 @@ class AmmoCounterApp:
             command=lambda: self.update_count(self.blank_count, 1)
         ).grid(row=0, column=2, padx=5)
         
-        # ================= 瀛愬脊鐘舵€佽缃尯鍩?=================
+        # ================= 子弹状态设置区域 =================
         bullet_frame = tk.LabelFrame(
             main_frame, 
-            text="瀛愬脊鐘舵€佽缃?, 
+            text="子弹状态设置", 
             font=("Arial", 11, "bold"),
             bg="#2c3e50", 
             fg="#9b59b6",
@@ -220,15 +220,15 @@ class AmmoCounterApp:
             pady=15
         )
         bullet_frame.pack(fill=tk.BOTH, expand=True, pady=(10, 0))
-        self.bullet_frame = bullet_frame  # 淇濆瓨寮曠敤
+        self.bullet_frame = bullet_frame  # 保存引用
         
-        # 瀛愬脊搴忓彿鎺у埗
+        # 子弹序号控制
         seq_frame = tk.Frame(bullet_frame, bg="#2c3e50")
         seq_frame.pack(fill=tk.X, pady=5)
         
         tk.Label(
             seq_frame, 
-            text="绗嚑鍙戝瓙寮?", 
+            text="第几发子弹:", 
             font=self.bullet_font,
             bg="#2c3e50", 
             fg="#ecf0f1"
@@ -238,7 +238,7 @@ class AmmoCounterApp:
         
         tk.Button(
             seq_frame, 
-            text="鈼?, 
+            text="◄", 
             font=self.bullet_font,
             width=2,
             bg="#8e44ad", 
@@ -263,7 +263,7 @@ class AmmoCounterApp:
         
         tk.Button(
             seq_frame, 
-            text="鈻?, 
+            text="►", 
             font=self.bullet_font,
             width=2,
             bg="#8e44ad", 
@@ -272,23 +272,23 @@ class AmmoCounterApp:
             command=lambda: self.update_bullet_num(1)
         ).pack(side=tk.LEFT)
         
-        # 瀛愬脊鐘舵€佹帶鍒?
+        # 子弹状态控制
         state_frame = tk.Frame(bullet_frame, bg="#2c3e50")
         state_frame.pack(fill=tk.X, pady=10)
         
         tk.Label(
             state_frame, 
-            text="瀛愬脊绫诲瀷:", 
+            text="子弹类型:", 
             font=self.bullet_font,
             bg="#2c3e50", 
             fg="#ecf0f1"
         ).pack(side=tk.LEFT, padx=(0, 10))
         
-        self.bullet_state = tk.StringVar(value="瀹炲脊")
+        self.bullet_state = tk.StringVar(value="实弹")
         
         tk.Button(
             state_frame, 
-            text="鈼?, 
+            text="◄", 
             font=self.bullet_font,
             width=2,
             bg="#8e44ad", 
@@ -312,7 +312,7 @@ class AmmoCounterApp:
         
         tk.Button(
             state_frame, 
-            text="鈻?, 
+            text="►", 
             font=self.bullet_font,
             width=2,
             bg="#8e44ad", 
@@ -321,14 +321,14 @@ class AmmoCounterApp:
             command=lambda: self.change_bullet_state(1)
         ).pack(side=tk.LEFT)
         
-        # 鎺у埗鎸夐挳鍖?
+        # 控制按钮区
         control_frame = tk.Frame(main_frame, bg="#2c3e50", pady=15)
         control_frame.pack(fill=tk.X, pady=(10, 0))
         
-        # 缃《澶嶉€夋
+        # 置顶复选框
         self.topmost_cb = tk.Checkbutton(
             control_frame,
-            text="绐楀彛缃《",
+            text="窗口置顶",
             variable=self.topmost_var,
             command=self.toggle_topmost,
             bg="#2c3e50",
@@ -340,10 +340,10 @@ class AmmoCounterApp:
         )
         self.topmost_cb.pack(side=tk.LEFT, padx=10)
         
-        # 閲嶇疆鎸夐挳
+        # 重置按钮
         tk.Button(
             control_frame,
-            text="鍏ㄩ儴閲嶇疆 (绌烘牸閿?",
+            text="全部重置 (空格键)",
             font=("Arial", 10, "bold"),
             bg="#e67e22",
             fg="white",
@@ -353,13 +353,13 @@ class AmmoCounterApp:
             command=self.reset_all
         ).pack(side=tk.RIGHT, padx=10)
         
-        # 鎻愮ず鏍囩
+        # 提示标签
         tip_frame = tk.Frame(main_frame, bg="#2c3e50")
         tip_frame.pack(fill=tk.X)
         
         tip_label = tk.Label(
             tip_frame,
-            text="鎻愮ず: 鈫?鈫?鎺у埗瀹炲脊 | 鈫?鈫?鎺у埗绌哄脊 | Ctrl+B 鐒︾偣鍒板瓙寮硅缃?| ESC 閫€鍑?,
+            text="提示: ↑/↓ 控制实弹 | ←/→ 控制空弹 | Ctrl+B 焦点到子弹设置 | ESC 退出",
             font=("Arial", 8),
             bg="#2c3e50",
             fg="#bdc3c7"
@@ -368,21 +368,21 @@ class AmmoCounterApp:
 
     def update_count(self, counter, delta, update_current=False):
         new_value = counter.get() + delta
-        if new_value >= 0:  # 闃叉璐熸暟
+        if new_value >= 0:  # 防止负数
             counter.set(new_value)
             
-            # 濡傛灉鍑忓皯寮硅嵂锛屾洿鏂板綋鍓嶅瓙寮瑰簭鍙?
+            # 如果减少弹药，更新当前子弹序号
             if delta < 0 and update_current:
                 self.current_bullet.set(self.current_bullet.get() + 1)
 
     def update_current_bullet(self, delta):
         new_value = self.current_bullet.get() + delta
-        if new_value >= 1:  # 瀛愬脊搴忓彿涓嶈兘灏忎簬1
+        if new_value >= 1:  # 子弹序号不能小于1
             self.current_bullet.set(new_value)
 
     def update_bullet_num(self, delta):
         new_value = self.bullet_num.get() + delta
-        if new_value >= 1:  # 瀛愬脊搴忓彿涓嶈兘灏忎簬1
+        if new_value >= 1:  # 子弹序号不能小于1
             self.bullet_num.set(new_value)
             self.update_bullet_state_display()
 
@@ -402,48 +402,48 @@ class AmmoCounterApp:
         new_index = (current_index + direction) % len(self.ammo_types)
         self.bullet_state.set(self.ammo_types[new_index])
         
-        # 鏇存柊鏍囩棰滆壊
-        if self.bullet_state.get() == "瀹炲脊":
+        # 更新标签颜色
+        if self.bullet_state.get() == "实弹":
             self.state_label.config(fg="#e74c3c")
         else:
             self.state_label.config(fg="#3498db")
         
-        # 鑷姩淇濆瓨鐘舵€?
+        # 自动保存状态
         self.save_bullet_state()
 
     def save_bullet_state(self):
         bullet_num = self.bullet_num.get()
         state = self.bullet_state.get()
         
-        # 鏇存柊鐘舵€佸瓧鍏?
+        # 更新状态字典
         self.bullet_states[bullet_num] = state
 
     def update_bullet_state_display(self):
-        # 妫€鏌ヨ搴忓彿瀛愬脊鏄惁宸叉湁璁剧疆
+        # 检查该序号子弹是否已有设置
         bullet_num = self.bullet_num.get()
         if bullet_num in self.bullet_states:
             self.bullet_state.set(self.bullet_states[bullet_num])
-            if self.bullet_state.get() == "瀹炲脊":
+            if self.bullet_state.get() == "实弹":
                 self.state_label.config(fg="#e74c3c")
             else:
                 self.state_label.config(fg="#3498db")
         else:
-            # 榛樿璁剧疆涓哄疄寮?
-            self.bullet_state.set("瀹炲脊")
+            # 默认设置为实弹
+            self.bullet_state.set("实弹")
             self.state_label.config(fg="#e74c3c")
 
     def reset_all(self):
-        # 閲嶇疆璁℃暟鍣?
+        # 重置计数器
         self.live_count.set(0)
         self.blank_count.set(0)
         
-        # 閲嶇疆褰撳墠瀛愬脊搴忓彿
+        # 重置当前子弹序号
         self.current_bullet.set(1)
         
-        # 閲嶇疆瀛愬脊鐘舵€?
+        # 重置子弹状态
         self.bullet_states = {}
         self.bullet_num.set(1)
-        self.bullet_state.set("瀹炲脊")
+        self.bullet_state.set("实弹")
         self.state_label.config(fg="#e74c3c")
 
     def toggle_topmost(self):
