@@ -28,15 +28,14 @@
 ## 🗂️ 文件结构
 
 ```
-devil-roulette-counter/
-├── README.md
-├── .gitignore
+devils-roulette-counter/
 ├── 源代码/
 │   ├── 终2.py          # 主程序源码（Python + Tkinter GUI）
 │   ├── em.ico          # 程序图标
 │   ├── bulid_no_cmd.py # PyInstaller 构建脚本
-│   └── 恶魔轮盘子弹计数器nc.spec
-└── 恶魔轮盘作弊计数器nc.exe  # 预编译可执行文件（Windows）
+│   └── 恶魔轮盘子弹计数器nc.spec  # PyInstaller 打包配置
+├── 恶魔轮盘作弊计数器nc.exe  # 预编译可执行文件（Windows）
+└── README.md
 ```
 
 ---
@@ -46,7 +45,10 @@ devil-roulette-counter/
 如果你有 Python 环境，可以自行重新打包：
 
 ```bash
+# 安装依赖
 pip install pyinstaller
+
+# 运行打包脚本
 cd 源代码
 python bulid_no_cmd.py
 ```
